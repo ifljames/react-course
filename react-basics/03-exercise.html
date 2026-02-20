@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      function ClickCounter({ count, setCount }) {
+        function increaseCount() {
+          setCount(count + 1);
+        }
+
+        return (
+          <>
+            <button type="button" onClick={increaseCount}>
+              Clicked {count} {count === 1 ? "time" : "times"}
+            </button>
+          </>
+        );
+      }
+
+      function ResetCount({ count, setCount }) {
+        function resetCounter() {
+          setCount(0);
+        }
+
+        return (
+          <>
+            <button type="button" onClick={resetCounter}>
+              Reset
+            </button>
+          </>
+        );
+      }
+
+      function MessageInput() {
+        const [message, setMessage] = React.useState("");
+
+        function saveInputText(event) {
+          setMessage(event.target.value);
+        }
+
+        function resetInputText() {
+          setMessage("");
+        }
+
+        function showExample() {
+          setMessage("Wawis");
+        }
+
+        return (
+          <div>
+            <input
+              type="text"
+              placeholder="Type a name here"
+              onChange={saveInputText}
+              value={message}
+            />
+            <button type="button" onClick={resetInputText}>
+              Reset
+            </button>            
+            <button type="button" onClick={showExample}>
+              Example
+            </button>            
+            <p>Hello {message}</p>
+          </div>
+        );
+      }
+
+      function App() {
+        const [count, setCount] = React.useState(0);
+
+        return (
+          <>
+            <ClickCounter count={count} setCount={setCount} />
+            <ClickCounter count={count} setCount={setCount} />
+            <ResetCount setCount={setCount} />
+            <MessageInput />
+          </>
+        );
+      }
+
+      const container = document.querySelector(".js-container");
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chatbot</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+      }
+
+      button {
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        cursor: pointer;
+      }
+
+      .app-container {
+        max-width: 600px;
+        height: 100vh;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .input-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .email-input,
+      .password-input {
+        padding: 12px 15px;
+        border-radius: 10px;
+        border-width: 1px;
+        font-size: 15px;
+        margin-bottom: 10px;
+        flex-grow: 1;
+      }
+
+      .btn-on,
+      .btn-counter {
+        background-color: rgb(25, 135, 84);
+      }
+
+      .btn-off {
+        background-color: rgb(220, 53, 69);
+      }
+
+      .btn-group,
+      .input-password-group {
+        display: flex;
+        align-items: start;
+        flex-direction: row;
+        gap: 10px;
+      }
+
+      .btn-login,
+      .btn-signup,
+      .btn-show-password {
+        background-color: rgb(0, 123, 255);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="js-container"></div>
+
+    <script src="https://unpkg.com/supersimpledev/dayjs.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/react.js"></script>
+    <script src="https://unpkg.com/supersimpledev/react-dom.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/chatbot.js"></script>
+
+    <script src="https://unpkg.com/supersimpledev/babel.js"></script>
+    <script type="text/babel">
+      function TestButton() {
+        const [btnState, setBtnState] = React.useState(true);
+        var btnClass = btnState ? "btn-on" : "btn-off";
+        var btnText = btnState ? "ON" : "OFF";
+
+        function toggleButton() {
+          if (btnState) {
+            setBtnState(false);
+          } else {
+            setBtnState(true);
+          }
+        }
+
+        return (
+          <>
+            <button className={btnClass} onClick={toggleButton}>
+              {btnText}
+            </button>
+          </>
+        );
+      }
+
+      function LoginForm() {
+        const [isShowPassword, setIsShowPassword] = React.useState(false);
+        const [time, setTime] = React.useState(dayjs().format("HH:mm:ss"));
+        const [count, setCount] = React.useState(0);
+        const btnCounter = React.useRef(null);
+        var passwordState = isShowPassword ? "text" : "password";
+
+        React.useEffect(() => {
+          setInterval(() => {
+            console.log("run");
+            setTime(dayjs().format("HH:mm:ss"));
+          }, 1000);
+        }, []);
+
+        function showPassword() {
+          if (isShowPassword) {
+            setIsShowPassword(false);
+          } else {
+            setIsShowPassword(true);
+          }
+        }
+
+        function increaseCount() {
+          setCount(count + 1);
+        }
+
+        function resetCounter() {
+          setCount(0);
+        }
+
+        function autoClick() {
+          const btnElem = btnCounter.current;
+          setInterval(() => {
+            btnElem.click();
+          }, 1000);
+        }
+
+        return (
+          <>
+            <p>Hello, welcome to my website</p>
+            <p>Today is {dayjs().format("MMMM D")}</p>
+            <p>Current time: {time}</p>
+            <div className="input-group">
+              <input className="email-input" type="text" placeholder="Email" />
+              <div className="input-password-group">
+                <input
+                  className="password-input"
+                  type={passwordState}
+                  placeholder="Password"
+                />
+                <button className="btn-show-password" onClick={showPassword}>
+                  Show
+                </button>
+              </div>
+            </div>
+            <div className="btn-group">
+              <button className="btn-login">Login</button>
+              <button className="btn-signup">Sign Up</button>
+            </div>
+            <div className="btn-group">
+              <button
+                className="btn-counter"
+                onClick={increaseCount}
+                ref={btnCounter}
+              >
+                Clicked {count} {count === 1 ? "time" : "times"}
+              </button>
+              <button className="btn-counter" onClick={resetCounter}>
+                Reset
+              </button>
+              <button className="btn-counter" onClick={autoClick}>
+                Auto Click
+              </button>
+            </div>
+          </>
+        );
+      }
+
+      function App() {
+        return (
+          <div className="app-container">
+            <LoginForm />
+          </div>
+        );
+      }
+
+      const container = document.querySelector(".js-container");
+      const root = ReactDOM.createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
+</html>
