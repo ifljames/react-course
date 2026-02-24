@@ -1,7 +1,7 @@
 import { CheckoutHeader } from "../../components/CheckoutHeader";
 import "./CheckoutPage.css";
 
-export function CheckoutPage() {
+export function CheckoutPage({ cart }) {
   return (
     <>
       <link rel="icon" type="image/svg+xml" href="/images/cart-favicon.png" />
