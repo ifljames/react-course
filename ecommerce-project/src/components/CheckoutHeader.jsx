@@ -19,7 +19,7 @@ export function CheckoutHeader({ cart }) {
           <div className="checkout-header-middle-section">
             Checkout (
             <Link className="return-to-home-link" to="/">
-              {cart.quantity} items
+              {cart.length} items
             </Link>
             )
           </div>
