@@ -14,9 +14,9 @@ export function Product({ product, loadCart }) {
     });
 
     setIsAddedToCart(true);
-    
+
     setTimeout(() => {
-        setIsAddedToCart(false);
+      setIsAddedToCart(false);
     }, 2000);
 
     await loadCart();
@@ -31,7 +31,11 @@ export function Product({ product, loadCart }) {
   return (
     <div className="product-container">
       <div className="product-image-container">
-        <img className="product-image" src={product.image} />
+        <img
+          className="product-image"
+          data-testid="product-image"
+          src={product.image}
+        />
       </div>
 
       <div className="product-name limit-text-to-2-lines">{product.name}</div>
@@ -39,9 +43,13 @@ export function Product({ product, loadCart }) {
       <div className="product-rating-container">
         <img
           className="product-rating-stars"
+          data-testid="product-rating-stars-image"
           src={`images/ratings/rating-${product.rating.stars * 10}.png`}
         />
-        <div className="product-rating-count link-primary">
+        <div
+          className="product-rating-count link-primary"
+          data-testid="product-rating-count"
+        >
           {product.rating.count}
         </div>
       </div>
@@ -65,7 +73,7 @@ export function Product({ product, loadCart }) {
 
       <div className="product-spacer"></div>
 
-      <div className="added-to-cart" style={{opacity: isAddedToCart ? 1 : 0}}>
+      <div className="added-to-cart" style={{ opacity: isAddedToCart ? 1 : 0 }}>
         <img src={CheckmarkIcon} />
         Added
       </div>
