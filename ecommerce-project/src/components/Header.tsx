@@ -6,7 +6,15 @@ import LogoWhite from "../assets/images/logo-white.png";
 import MobileLogoWhite from "../assets/images/mobile-logo-white.png";
 import "./Header.css";
 
-export function Header({ cart }) {
+type HeaderProps = {
+  cart: {
+    productId: string;
+    quantity: number;
+    deliveryOptionId: string;
+  }[];
+};
+
+export function Header({ cart }: HeaderProps) {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const searchText = searchParams.get("search");
@@ -32,7 +40,11 @@ export function Header({ cart }) {
         <div className="left-section">
           <NavLink to="/" className="header-link">
             <img className="logo" data-testid="header-logo" src={LogoWhite} />
-            <img className="mobile-logo" data-testid="header-mobile-logo" src={MobileLogoWhite} />
+            <img
+              className="mobile-logo"
+              data-testid="header-mobile-logo"
+              src={MobileLogoWhite}
+            />
           </NavLink>
         </div>
 
@@ -57,11 +69,19 @@ export function Header({ cart }) {
         </div>
 
         <div className="right-section">
-          <NavLink className="orders-link header-link" to="/orders" data-testid="header-orders-link">
+          <NavLink
+            className="orders-link header-link"
+            to="/orders"
+            data-testid="header-orders-link"
+          >
             <span className="orders-text">Orders</span>
           </NavLink>
 
-          <NavLink className="cart-link header-link" to="/checkout" data-testid="header-cart-link">
+          <NavLink
+            className="cart-link header-link"
+            to="/checkout"
+            data-testid="header-cart-link"
+          >
             <img className="cart-icon" src={CartIcon} />
             <div className="cart-quantity">{totalQuantity}</div>
             <div className="cart-text">Cart</div>
